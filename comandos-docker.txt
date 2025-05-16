@@ -1,0 +1,19 @@
+#CRIAÇÃO DA NETWORK
+docker network create library-network //criando a network e aplicando um nome(referencia)
+
+# CRIAÇÃO DO CONTAINER DO POSTGRES
+docker run --name librarydb //nome do container
+-p 5432:5432 //porta
+-e POSTGRES_PASSWORD=postgres //(variaveis de ambiente)senha do banco de dados
+-e POSTGRES_USER=postgres //(variaveis de ambiente)user do banco de dados
+-e POSTGRES_DB=library // (variaveis de ambiente)nome do banco de dados
+--network library-network //referencia para a network criada
+postgresql:16.3 //imagem do postgres para docker e a sua versão
+
+#CRIAÇÃO DO CONTAINER DO PGADMIN
+docker run --name pgadmin4 //nome do container
+-p 15432:80 // porta
+-e PGADMIN_DEFAULT_EMAIL=lucas.iferreir@gmail.com //(variaveis de ambiente)user
+-e PGADMIN_DEFAULT_PASSWORD=admin //(variaveis de ambiente)senha
+--network library-network  //referencia da network criada
+dpage/pgadmin4:8.9  //imagem do pgadmin para docker e sua versão
