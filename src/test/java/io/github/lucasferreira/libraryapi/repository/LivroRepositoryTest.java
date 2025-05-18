@@ -21,14 +21,14 @@ class LivroRepositoryTest {
     AutorRepository autorRepository;
 
     @Test
-    void salvarTest(){
+    void salvarTest() {
         Livro livro = new Livro();
 
         livro.setIsbn("9888845-1234");
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("UFO");
-        livro.setDataPublicacao(LocalDate.of(1980,05,25));
+        livro.setDataPublicacao(LocalDate.of(1980, 05, 25));
 
         Autor autor = autorRepository.findById(UUID.fromString("11f84f18-6b80-404b-b00d-321f7ad31340")).get();
 
@@ -41,14 +41,14 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void salvarAutorELivroTest(){
+    void salvarAutorELivroTest() {
         Livro livro = new Livro();
 
         livro.setIsbn("9888845-1234");
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("Segundo Livro");
-        livro.setDataPublicacao(LocalDate.of(1980,05,25));
+        livro.setDataPublicacao(LocalDate.of(1980, 05, 25));
 
 
         Autor autor = new Autor();
@@ -65,14 +65,14 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void salvarCascadeTest(){
+    void salvarCascadeTest() {
         Livro livro = new Livro();
 
         livro.setIsbn("9888845-1234");
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("UFO");
-        livro.setDataPublicacao(LocalDate.of(1980,05,25));
+        livro.setDataPublicacao(LocalDate.of(1980, 05, 25));
 
 
         Autor autor = new Autor();
@@ -85,6 +85,36 @@ class LivroRepositoryTest {
 
         System.out.println("O livro " + livro.getTitulo() + " foi salvo no banco de teste!");
 
+    }
+
+    @Test
+    void atualizarAutorDoLivroTest() {
+        UUID id = UUID.fromString("a19bef3e-6eb7-45c3-b8bc-f4f883c6a072");
+        var livroParaAtualizar = repository.findById(id);
+
+        UUID idAutor = UUID.fromString("11f84f18-6b80-404b-b00d-321f7ad31340");
+        var marcia = autorRepository.findById(idAutor);
+        if (livroParaAtualizar.isPresent() && marcia.isPresent()) {
+            Livro livro = livroParaAtualizar.get();
+            Autor autor = marcia.get();
+            livro.setAutor(autor);
+            repository.save(livro);
+        }
+    }
+
+    @Test
+    void deletarTest(){
+        UUID id = UUID.fromString("a19bef3e-6eb7-45c3-b8bc-f4f883c6a072");
+        repository.deleteById(id);
+
+
+    }
+
+    @Test
+    void deletarPorObjetoTest(){
+        UUID id = UUID.fromString("c9e9b5bf-66a8-4474-a1b0-6c27ff291127");
+        var livro = repository.findById(id);
+        repository.delete(livro.get());
     }
 
 }
