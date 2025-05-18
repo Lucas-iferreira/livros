@@ -28,7 +28,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletarTest() {
-        var id = UUID.fromString("00708a9e-8f83-4bd5-a8bf-3fff9873d358");
+        var id = UUID.fromString("b30427d4-213e-4339-a1d0-6dea5afc8e29");
         repository.deleteById(id);
 
         System.out.println("Usuario deletado");
