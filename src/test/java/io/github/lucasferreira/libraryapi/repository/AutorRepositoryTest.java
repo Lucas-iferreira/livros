@@ -16,7 +16,7 @@ public class AutorRepositoryTest {
     @Autowired
     AutorRepository repository;
 
-    //    @Test
+    @Test
     public void salvarTest() {
         Autor autor = new Autor();
         autor.setNome("Maria");
@@ -60,14 +60,14 @@ public class AutorRepositoryTest {
     }
 
     @Test
-    public void listarTest(){
+    public void listarTest() {
         List<Autor> autorList = repository.findAll();
 
         autorList.forEach(System.out::println);
     }
 
     @Test
-    public void countTest(){
+    public void countTest() {
         System.out.println("Contagem: " + repository.count());
     }
 
