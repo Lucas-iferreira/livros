@@ -78,7 +78,7 @@ public class AutorRepositoryTest {
     }
 
     @Test
-    void salvarAutorComLivrosTest(){
+    void salvarAutorComLivrosTest() {
         Autor autor = new Autor();
         autor.setNome("Antonio");
         autor.setNacionalidade("Americana");
@@ -105,6 +105,17 @@ public class AutorRepositoryTest {
         autor.getLivros().add(livro);
         autor.getLivros().add(livro2);
         repository.save(autor);
+    }
+
+    @Test
+    void listarLivrosAutor() {
+        var id = UUID.fromString("1182e9f2-902a-4dc6-b681-605ae5b0875b");
+        Autor possivelAutor = repository.findById(id).get();
+
+        List<Livro> listaLivros = livroRepository.findLivroByAutor(possivelAutor);
+        possivelAutor.setLivros(listaLivros);
+
+        possivelAutor.getLivros().forEach(System.out::println);
 
     }
 
