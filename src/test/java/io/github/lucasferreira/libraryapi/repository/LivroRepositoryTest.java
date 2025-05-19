@@ -24,7 +24,6 @@ class LivroRepositoryTest {
     @Test
     void salvarTest() {
         Livro livro = new Livro();
-
         livro.setIsbn("9888845-1234");
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FICCAO);
@@ -105,7 +104,7 @@ class LivroRepositoryTest {
 
     @Test
     void deletarTest(){
-        UUID id = UUID.fromString("a19bef3e-6eb7-45c3-b8bc-f4f883c6a072");
+        UUID id = UUID.fromString("c919dc02-741e-4048-9779-77dce882a1b2");
         repository.deleteById(id);
 
 
@@ -113,7 +112,7 @@ class LivroRepositoryTest {
 
     @Test
     void deletarPorObjetoTest(){
-        UUID id = UUID.fromString("c9e9b5bf-66a8-4474-a1b0-6c27ff291127");
+        UUID id = UUID.fromString("19f6eb0c-5d33-4421-bee7-6b75ec55187d");
         var livro = repository.findById(id);
         repository.delete(livro.get());
     }
@@ -128,7 +127,7 @@ class LivroRepositoryTest {
         System.out.println("Livro: ");
         System.out.println(livro.getTitulo());
         System.out.println("Autor: ");
-        System.out.println(livro);
+        System.out.println(livro.getAutor().getNome());
 
     }
 

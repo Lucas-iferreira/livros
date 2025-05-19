@@ -1,11 +1,15 @@
 package io.github.lucasferreira.libraryapi.repository;
 
 import io.github.lucasferreira.libraryapi.model.Autor;
+import io.github.lucasferreira.libraryapi.model.GeneroLivro;
+import io.github.lucasferreira.libraryapi.model.Livro;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,6 +19,8 @@ public class AutorRepositoryTest {
 
     @Autowired
     AutorRepository repository;
+    @Autowired
+    LivroRepository livroRepository;
 
     @Test
     public void salvarTest() {
@@ -28,7 +34,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletarTest() {
-        var id = UUID.fromString("b30427d4-213e-4339-a1d0-6dea5afc8e29");
+        var id = UUID.fromString("c919dc02-741e-4048-9779-77dce882a1b2");
         repository.deleteById(id);
 
         System.out.println("Usuario deletado");
@@ -69,6 +75,37 @@ public class AutorRepositoryTest {
     @Test
     public void countTest() {
         System.out.println("Contagem: " + repository.count());
+    }
+
+    @Test
+    void salvarAutorComLivrosTest(){
+        Autor autor = new Autor();
+        autor.setNome("Antonio");
+        autor.setNacionalidade("Americana");
+        autor.setDataNascimento(LocalDate.of(1970, 8, 5));
+
+        Livro livro = new Livro();
+        livro.setIsbn("34567-84574");
+        livro.setPreco(BigDecimal.valueOf(204));
+        livro.setGenero(GeneroLivro.MISTERIO);
+        livro.setTitulo("O roubo da casa assombrada");
+        livro.setDataPublicacao(LocalDate.of(1999, 1, 2));
+        livro.setAutor(autor);
+
+        Livro livro2 = new Livro();
+        livro2.setIsbn("99999-974574");
+        livro2.setPreco(BigDecimal.valueOf(650));
+        livro2.setGenero(GeneroLivro.MISTERIO);
+        livro2.setTitulo("Harry Potter: e a ordem da Fenix");
+        livro2.setDataPublicacao(LocalDate.of(1994, 4, 15));
+        livro2.setAutor(autor);
+
+        autor.setLivros(new ArrayList<>());
+
+        autor.getLivros().add(livro);
+        autor.getLivros().add(livro2);
+        repository.save(autor);
+
     }
 
 }
