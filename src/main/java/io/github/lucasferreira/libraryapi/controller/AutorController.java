@@ -33,6 +33,7 @@ public class AutorController {
                 fromCurrentRequest().
                 path("/{id}").
                 buildAndExpand(autorEntidade.getId()).toUri();
+
         return ResponseEntity.created(location).build();
     }
 
