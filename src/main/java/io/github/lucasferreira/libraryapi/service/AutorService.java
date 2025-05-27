@@ -6,7 +6,8 @@ import io.github.lucasferreira.libraryapi.repository.AutorRepository;
 import io.github.lucasferreira.libraryapi.repository.LivroRepository;
 import io.github.lucasferreira.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,19 +54,19 @@ public class AutorService {
         autorRepository.delete(autor);
     }
 
-    public List<Autor> obterListaDeAutor(String nome, String nacionalidade) {
-        if (nome != null && nacionalidade != null) {
-            return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
-        }
-        if (nome != null) {
-            return autorRepository.findByNome(nome);
-        }
+    public List<Autor> pesquisaByExample(String nome, String nacionalidade) {
+        var autor = new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+        ExampleMatcher matcher = ExampleMatcher.
+                matching().
+                withIgnorePaths("id","dataNascimento","dataCadastro").
+                withIgnoreNullValues().
+                withIgnoreCase().
+                withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Autor> autorExample = Example.of(autor,matcher);
 
-        if (nacionalidade != null) {
-            return autorRepository.findByNacionalidade(nacionalidade);
-        }
-
-        return autorRepository.findAll();
+        return autorRepository.findAll(autorExample);
     }
 
     public boolean possuiLivro(Autor autor){
