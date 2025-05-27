@@ -7,6 +7,7 @@ import io.github.lucasferreira.libraryapi.exceptions.OperacaoNaoPermitidaExcepti
 import io.github.lucasferreira.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.lucasferreira.libraryapi.model.Autor;
 import io.github.lucasferreira.libraryapi.service.AutorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,14 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/autores")
+@RequiredArgsConstructor
 public class AutorController {
     private final AutorService autorService;
-
-    @Autowired
-    public AutorController(AutorService autorService) {
-        this.autorService = autorService;
-    }
+//
+//    @Autowired
+//    public AutorController(AutorService autorService) {
+//        this.autorService = autorService;
+//    }
 
     @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody AutorDTO autor) {
