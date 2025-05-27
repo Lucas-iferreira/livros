@@ -17,6 +17,8 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
 
     //Query Method
 
+    boolean existsByAutor(Autor autor);
+
     //SELECT * FROM livro WHERE id_autor = id
     @Query
     List<Livro> findLivroByAutor(Autor autor);
