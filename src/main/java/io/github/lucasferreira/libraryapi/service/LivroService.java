@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LivroService {
-    private final LivroRepository repository;
+//    private final LivroRepository repository;
 }
